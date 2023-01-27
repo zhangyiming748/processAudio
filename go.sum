@@ -2,3 +2,5 @@ github.com/zhangyiming748/log v0.0.3 h1:SL2zmxLElyuT4AyVegxm2hEPT1ZAw6V0J5kRIUjK
 github.com/zhangyiming748/log v0.0.3/go.mod h1:0AuXMXYc1C1Q1nH2H4vipsrOTfANNf4oaZtDcT2GKk4=
 github.com/zhangyiming748/replace v0.0.4 h1:MttKBU+2pFNofExc1oUY0vaEsRV0lGiAyPSdyIn7/Co=
 github.com/zhangyiming748/replace v0.0.4/go.mod h1:R3otYn+0qxaHOVaz0LafMwoDjhTexJijrLgfcDyOYCQ=
+github.com/zhangyiming748/voiceAlert v0.0.9 h1:4UxBuIVSl7Y/lZRHH0rlapMade7+bq7jtgg3iY1w9qo=
+github.com/zhangyiming748/voiceAlert v0.0.9/go.mod h1:ReSkuJK/eAGpWs1k5MvAAe2WTKKQly6LzbOZ6FoHk6Y=
