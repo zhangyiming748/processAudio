@@ -11,16 +11,10 @@ import (
 	"time"
 )
 
-const (
-	success  = iota + 1 // 单次转码成功
-	failed              // 转码失败,程序退出
-	complete            // 转码进程完成
-)
-
 func ProcessAudio(dir, pattern string) {
 	defer func() {
 		if err := recover(); err != nil {
-			voiceAlert.Voice(failed)
+			voiceAlert.Voice(voiceAlert.FAILED)
 		}
 	}()
 	m_start := time.Now()
@@ -31,19 +25,19 @@ func ProcessAudio(dir, pattern string) {
 	files = util.GetMultiFiles(dir, pattern)
 	for _, file := range files {
 		convert.Convert2AAC(file)
-		voiceAlert.Voice(success)
+		voiceAlert.Voice(voiceAlert.SUCCESS)
 	}
 	m_end := time.Now()
 	end := time.Now().Format("整个任务结束时间 15:04:03")
 	log.Debug.Println(end)
 	during := m_end.Sub(m_start).Minutes()
 	log.Debug.Printf("整个任务用时 %v 分\n", during)
-	voiceAlert.Voice(complete)
+	voiceAlert.Voice(voiceAlert.COMPLETE)
 }
 func ProcessAllAudio(root, pattern string) {
 	defer func() {
 		if err := recover(); err != nil {
-			voiceAlert.Voice(failed)
+			voiceAlert.Voice(voiceAlert.FAILED)
 		}
 	}()
 	m_start := time.Now()
@@ -55,14 +49,14 @@ func ProcessAllAudio(root, pattern string) {
 		files = util.GetMultiFiles(src, pattern)
 		for _, file := range files {
 			convert.Convert2AAC(file)
-			voiceAlert.Voice(success)
+			voiceAlert.Voice(voiceAlert.SUCCESS)
 		}
 	}
 	m_end := time.Now()
 	end := time.Now().Format("整个任务结束时间 15:04:03")
 	log.Debug.Println(end)
 	during := m_end.Sub(m_start).Minutes()
-	voiceAlert.Voice(complete)
+	voiceAlert.Voice(voiceAlert.COMPLETE)
 	log.Debug.Printf("整个任务用时 %v 分\n", during)
 }
 
