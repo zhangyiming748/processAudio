@@ -2,6 +2,7 @@ package processAudio
 
 import (
 	"fmt"
+	"github.com/zhangyiming748/GetAllFolder"
 	"github.com/zhangyiming748/log"
 	"github.com/zhangyiming748/processAudio/convert"
 	"github.com/zhangyiming748/processAudio/util"
@@ -44,7 +45,7 @@ func ProcessAllAudio(root, pattern string) {
 	start := time.Now().Format("整个任务开始时间 15:04:03")
 	log.Debug.Println(start)
 	var files []util.File
-	folders := listFolders(root)
+	folders := GetAllFolder.ListFolders(root)
 	for _, src := range folders {
 		files = util.GetMultiFiles(src, pattern)
 		for _, file := range files {
