@@ -8,7 +8,7 @@ func TestProcessAudio(t *testing.T) {
 	ProcessAudio(dir, pattern)
 }
 func TestProcessAllAudio(t *testing.T) {
-	dir := "/Users/zen/Music/Music/Media.localized"
-	pattern := "mp3"
+	dir := "/Users/zen/Downloads/Affect3d/Audio Updates"
+	pattern := "mp3;wav"
 	ProcessAllAudio(dir, pattern)
 }

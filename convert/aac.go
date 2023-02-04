@@ -1,15 +1,15 @@
 package convert
 
 import (
+	"github.com/zhangyiming748/GetFileInfo"
 	"github.com/zhangyiming748/log"
-	"github.com/zhangyiming748/processAudio/util"
 	"github.com/zhangyiming748/replace"
 	"os"
 	"os/exec"
 	"strings"
 )
 
-func Convert2AAC(in util.File) {
+func Convert2AAC(in GetFileInfo.Info) {
 	out := strings.Join([]string{strings.Trim(in.FullPath, in.ExtName), "aac"}, ".")
 	cmd := exec.Command("ffmpeg", "-i", in.FullPath, out)
 	log.Debug.Printf("生成的命令是:%s\n", cmd)
