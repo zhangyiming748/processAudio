@@ -21,7 +21,7 @@ func ProcessAudio(dir, pattern string) {
 	files := GetFileInfo.GetAllFileInfo(dir, pattern)
 	for _, file := range files {
 		convert.Convert2AAC(file)
-		voiceAlert.CustomizedOnMac(voiceAlert.Shanshan, "单个任务任务转换成功")
+		voiceAlert.CustomizedOnMac(voiceAlert.Shanshan, "单个任务转换成功")
 	}
 	m_end := time.Now()
 	end := time.Now().Format("整个任务结束时间 15:04:03")
