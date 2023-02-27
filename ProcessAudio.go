@@ -12,7 +12,7 @@ import (
 func ProcessAudio(dir, pattern string) {
 	defer func() {
 		if err := recover(); err != nil {
-			voiceAlert.Voice(voiceAlert.FAILED)
+			voiceAlert.CustomizedOnMac(voiceAlert.Shanshan, "任务执行失败")
 		}
 	}()
 	m_start := time.Now()
@@ -21,37 +21,18 @@ func ProcessAudio(dir, pattern string) {
 	files := GetFileInfo.GetAllFileInfo(dir, pattern)
 	for _, file := range files {
 		convert.Convert2AAC(file)
-		voiceAlert.Voice(voiceAlert.SUCCESS)
+		voiceAlert.CustomizedOnMac(voiceAlert.Shanshan, "单个任务任务转换成功")
 	}
 	m_end := time.Now()
 	end := time.Now().Format("整个任务结束时间 15:04:03")
 	log.Debug.Println(end)
 	during := m_end.Sub(m_start).Minutes()
 	log.Debug.Printf("整个任务用时 %v 分\n", during)
-	voiceAlert.Voice(voiceAlert.COMPLETE)
+	voiceAlert.CustomizedOnMac(voiceAlert.Shanshan, "整个任务执行完成")
 }
 func ProcessAllAudio(root, pattern string) {
-	defer func() {
-		if err := recover(); err != nil {
-			voiceAlert.Voice(voiceAlert.FAILED)
-		}
-	}()
-	m_start := time.Now()
-	start := time.Now().Format("整个任务开始时间 15:04:03")
-	log.Debug.Println(start)
-	ProcessAudio(root, pattern)
 	folders := GetAllFolder.ListFolders(root)
-	for _, dir := range folders {
-		files := GetFileInfo.GetAllFileInfo(dir, pattern)
-		for _, file := range files {
-			convert.Convert2AAC(file)
-			voiceAlert.Voice(voiceAlert.SUCCESS)
-		}
+	for _, folder := range folders {
+		ProcessAudio(folder, pattern)
 	}
-	m_end := time.Now()
-	end := time.Now().Format("整个任务结束时间 15:04:03")
-	log.Debug.Println(end)
-	during := m_end.Sub(m_start).Minutes()
-	voiceAlert.Voice(voiceAlert.COMPLETE)
-	log.Debug.Printf("整个任务用时 %v 分\n", during)
 }
