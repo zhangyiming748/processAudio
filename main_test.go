@@ -12,3 +12,8 @@ func TestProcessAllAudio(t *testing.T) {
 	pattern := "mp3;m4a;flac;MP3;wma;wav"
 	ProcessAllAudio(dir, pattern)
 }
+func TestSpeedUpAudio(t *testing.T) {
+	dir := "/Users/zen/Downloads/整理/YvDSJYMGBmjdKkPG"
+	pattern := "mp3;m4a;flac;MP3;wma;wav;aac"
+	SpeedUpAudio(dir, pattern, AudioBook)
+}
