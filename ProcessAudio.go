@@ -16,15 +16,15 @@ const (
 func ProcessAudio(dir, pattern string) {
 	defer func() {
 		if err := recover(); err != nil {
-			voiceAlert.CustomizedOnMac(voiceAlert.Shanshan, "任务执行失败")
+			voiceAlert.Customize("failed", voiceAlert.Samantha)
 		}
 	}()
 	files := GetFileInfo.GetAllFileInfo(dir, pattern)
 	for _, file := range files {
 		convert.Convert2AAC(file)
-		voiceAlert.CustomizedOnMac(voiceAlert.Shanshan, "单个任务转换成功")
+		voiceAlert.Customize("done", voiceAlert.Samantha)
 	}
-	voiceAlert.CustomizedOnMac(voiceAlert.Shanshan, "整个任务执行完成")
+	voiceAlert.Customize("complete", voiceAlert.Samantha)
 }
 func ProcessAllAudio(root, pattern string) {
 	folders := GetAllFolder.ListFolders(root)
@@ -35,16 +35,17 @@ func ProcessAllAudio(root, pattern string) {
 func SpeedUpAudio(dir, pattern string, speed string) {
 	defer func() {
 		if err := recover(); err != nil {
-			voiceAlert.CustomizedOnMac(voiceAlert.Shanshan, "加速任务失败")
+			voiceAlert.Customize("failed", voiceAlert.Samantha)
 		}
 	}()
 	files := GetFileInfo.GetAllFileInfo(dir, pattern)
 	for _, file := range files {
 		speedUp.Speedup(file, speed)
-		voiceAlert.CustomizedOnMac(voiceAlert.Shanshan, "单个音频加速成功")
+		voiceAlert.Customize("done", voiceAlert.Samantha)
 	}
-	voiceAlert.CustomizedOnMac(voiceAlert.Shanshan, strings.Join([]string{"全部音频加速", speed, "倍成功"}, ""))
+	voiceAlert.Customize(voiceAlert.Shanshan, strings.Join([]string{"complete", speed, "times"}, ""))
 }
+
 func SpeedUpAllAudio(root, pattern string, speed string) {
 	SpeedUpAudio(root, pattern, speed)
 	folders := GetAllFolder.ListFolders(root)
