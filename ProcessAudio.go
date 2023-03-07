@@ -27,6 +27,7 @@ func ProcessAudio(dir, pattern string) {
 	voiceAlert.Customize("complete", voiceAlert.Samantha)
 }
 func ProcessAllAudio(root, pattern string) {
+	ProcessAudio(root, pattern)
 	folders := GetAllFolder.ListFolders(root)
 	for _, folder := range folders {
 		ProcessAudio(folder, pattern)
