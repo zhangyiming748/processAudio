@@ -1,9 +1,10 @@
 package convert
 
 import (
+	"fmt"
 	"github.com/zhangyiming748/GetFileInfo"
-	"github.com/zhangyiming748/log"
 	"github.com/zhangyiming748/replace"
+	"golang.org/x/exp/slog"
 	"os"
 	"os/exec"
 	"strings"
@@ -12,34 +13,35 @@ import (
 func Convert2AAC(in GetFileInfo.Info) {
 	out := strings.Join([]string{strings.Trim(in.FullPath, in.ExtName), "aac"}, ".")
 	cmd := exec.Command("ffmpeg", "-i", in.FullPath, out)
-	log.Debug.Printf("生成的命令是:%s\n", cmd)
+	slog.Debug("生成的命令:%s\n", slog.Any("", fmt.Sprint(cmd)))
 	stdout, err := cmd.StdoutPipe()
 	cmd.Stderr = cmd.Stdout
 	if err != nil {
-		log.Warn.Panicf("cmd.StdoutPipe产生的错误:%v\n", err)
+		slog.Warn("cmd.StdoutPipe", slog.Any("产生的错误", err))
+		return
 	}
 	if err = cmd.Start(); err != nil {
-		log.Warn.Panicf("cmd.Run产生的错误:%v\n", err)
+		slog.Warn("cmd.Run", slog.Any("产生的错误", err))
+		return
 	}
 	for {
 		tmp := make([]byte, 1024)
 		_, err := stdout.Read(tmp)
-		//写成输出日志
-		//log.Info.Printf("正在处理第 %d/%d 个文件: %s\n", index+1, total, file)
 		t := string(tmp)
 		t = replace.Replace(t)
-		log.TTY.Println(t)
+		fmt.Println(t)
 		if err != nil {
 			break
 		}
 	}
 	if err = cmd.Wait(); err != nil {
-		log.Warn.Panicf("命令执行中有错误产生:%v\n", err)
+		slog.Warn("命令执行中", slog.Any("产生的错误", err))
+		return
 	}
 	//log.Debug.Printf("完成当前文件的处理:源文件是%s\t目标文件是%s\n", in, file)
 	if err := os.RemoveAll(in.FullPath); err != nil {
-		log.Warn.Printf("删除源文件失败:%v\n", err)
+		slog.Warn("删除失败", slog.Any("源文件", in.FullPath))
 	} else {
-		log.Debug.Printf("删除源文件:%v\n", in.FullName)
+		slog.Warn("删除成功", slog.Any("源文件", in.FullPath))
 	}
 }
