@@ -1,4 +1,4 @@
-package speedUp
+package processAudio
 
 import (
 	"fmt"
@@ -15,22 +15,22 @@ func Speedup(in GetFileInfo.Info, speed string) {
 	dst := strings.Join([]string{src, "speed"}, "") //目标文件目录
 	os.Mkdir(dst, 0777)
 	target := strings.Join([]string{dst, in.FullName}, string(os.PathSeparator))
-	slog.Info("io", slog.Any("输入文件", in.FullPath), slog.Any("输出文件", target))
+	mylog.Info("io", slog.Any("输入文件", in.FullPath), slog.Any("输出文件", target))
 	sppedUp_help(in.FullPath, target, speed)
 }
 
 func sppedUp_help(in, out string, speed string) {
 	atempo := strings.Join([]string{"atempo", speed}, "=")
 	cmd := exec.Command("ffmpeg", "-i", in, "-filter:a", atempo, "-vn", out)
-	slog.Info("command", slog.Any("生成的命令", fmt.Sprint(cmd)))
+	mylog.Info("生成命令", slog.String("命令", fmt.Sprint(cmd)))
 	stdout, err := cmd.StdoutPipe()
 	cmd.Stderr = cmd.Stdout
 	if err != nil {
-		slog.Warn("cmd.StdoutPipe", slog.Any("产生的错误", err))
+		mylog.Warn("cmd.StdoutPipe", slog.Any("产生的错误", err))
 		return
 	}
 	if err = cmd.Start(); err != nil {
-		slog.Warn("cmd.Run", slog.Any("产生的错误", err))
+		mylog.Warn("cmd.Run", slog.Any("产生的错误", err))
 		return
 	}
 	for {
@@ -43,8 +43,8 @@ func sppedUp_help(in, out string, speed string) {
 			break
 		}
 	}
-	if err = cmd.Wait(); err != nil {
-		slog.Warn("命令执行中", slog.Any("产生的错误", err))
+	if err := cmd.Wait(); err != nil {
+		mylog.Warn("命令执行中", slog.Any("产生的错误", err))
 		return
 	}
 	//if err := os.RemoveAll(in); err != nil {
