@@ -1,12 +1,15 @@
 package processAudio
 
 import (
+	"fmt"
 	"github.com/zhangyiming748/GetAllFolder"
 	"github.com/zhangyiming748/GetFileInfo"
+	"github.com/zhangyiming748/replace"
 	"github.com/zhangyiming748/voiceAlert"
 	"golang.org/x/exp/slog"
 	"io"
 	"os"
+	"os/exec"
 	"strings"
 )
 
@@ -59,8 +62,43 @@ func init() {
 	}
 	mylog = slog.New(opt.NewJSONHandler(io.MultiWriter(logf, os.Stdout)))
 }
+func processAudio(in GetFileInfo.Info) {
+	out := strings.Join([]string{strings.Trim(in.FullPath, in.ExtName), "aac"}, "")
+	cmd := exec.Command("ffmpeg", "-i", in.FullPath, out)
+	mylog.Debug("生成命令", slog.String("命令", fmt.Sprint(cmd)))
+	stdout, err := cmd.StdoutPipe()
+	cmd.Stderr = cmd.Stdout
+	if err != nil {
+		mylog.Warn("cmd.StdoutPipe", slog.Any("错误", err))
+		return
+	}
+	if err = cmd.Start(); err != nil {
+		mylog.Warn("cmd.Run", slog.Any("错误", err))
+		return
+	}
+	for {
+		tmp := make([]byte, 1024)
+		_, err := stdout.Read(tmp)
+		t := string(tmp)
+		t = replace.Replace(t)
+		fmt.Println(t)
+		if err != nil {
+			break
+		}
+	}
+	if err := cmd.Wait(); err != nil {
+		mylog.Warn("命令执行中", slog.Any("错误", err))
+		return
+	}
+	//log.Debug.Printf("完成当前文件的处理:源文件是%s\t目标文件是%s\n", in, file)
+	if err := os.RemoveAll(in.FullPath); err != nil {
+		mylog.Warn("删除失败", slog.String("源文件", in.FullPath), slog.Any("错误", err))
+	} else {
+		mylog.Debug("删除成功", slog.String("源文件", in.FullPath))
+	}
+}
 
-func ProcessAudio(dir, pattern string) {
+func ProcessAudios(dir, pattern string) {
 	defer func() {
 		if err := recover(); err != nil {
 			voiceAlert.Customize("failed", voiceAlert.Samantha)
@@ -68,19 +106,19 @@ func ProcessAudio(dir, pattern string) {
 	}()
 	files := GetFileInfo.GetAllFileInfo(dir, pattern)
 	for _, file := range files {
-		Convert2AAC(file)
+		processAudio(file)
 		voiceAlert.Customize("done", voiceAlert.Samantha)
 	}
 	voiceAlert.Customize("complete", voiceAlert.Samantha)
 }
-func ProcessAllAudio(root, pattern string) {
-	ProcessAudio(root, pattern)
+func ProcessAllAudios(root, pattern string) {
+	ProcessAudios(root, pattern)
 	folders := GetAllFolder.ListFolders(root)
 	for _, folder := range folders {
-		ProcessAudio(folder, pattern)
+		ProcessAudios(folder, pattern)
 	}
 }
-func SpeedUpAudio(dir, pattern string, speed string) {
+func SpeedUpAudios(dir, pattern string, speed string) {
 	defer func() {
 		if err := recover(); err != nil {
 			voiceAlert.Customize("failed", voiceAlert.Samantha)
@@ -88,16 +126,16 @@ func SpeedUpAudio(dir, pattern string, speed string) {
 	}()
 	files := GetFileInfo.GetAllFileInfo(dir, pattern)
 	for _, file := range files {
-		Speedup(file, speed)
+		SpeedupAudio(file, speed)
 		voiceAlert.Customize("done", voiceAlert.Samantha)
 	}
 	voiceAlert.Customize(voiceAlert.Shanshan, strings.Join([]string{"complete", speed, "times"}, ""))
 }
 
-func SpeedUpAllAudio(root, pattern string, speed string) {
-	SpeedUpAudio(root, pattern, speed)
+func SpeedUpAllAudios(root, pattern string, speed string) {
+	SpeedUpAudios(root, pattern, speed)
 	folders := GetAllFolder.ListFolders(root)
 	for _, folder := range folders {
-		SpeedUpAudio(folder, pattern, speed)
+		SpeedUpAudios(folder, pattern, speed)
 	}
 }
