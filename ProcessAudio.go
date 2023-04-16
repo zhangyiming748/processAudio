@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/zhangyiming748/GetAllFolder"
 	"github.com/zhangyiming748/GetFileInfo"
-	"github.com/zhangyiming748/replace"
 	"github.com/zhangyiming748/voiceAlert"
 	"golang.org/x/exp/slog"
 	"io"
@@ -80,7 +79,6 @@ func processAudio(in GetFileInfo.Info) {
 		tmp := make([]byte, 1024)
 		_, err := stdout.Read(tmp)
 		t := string(tmp)
-		t = replace.Replace(t)
 		fmt.Println(t)
 		if err != nil {
 			break
@@ -129,7 +127,7 @@ func SpeedUpAudios(dir, pattern string, speed string) {
 		SpeedupAudio(file, speed)
 		voiceAlert.Customize("done", voiceAlert.Samantha)
 	}
-	voiceAlert.Customize(voiceAlert.Shanshan, strings.Join([]string{"complete", speed, "times"}, ""))
+	voiceAlert.Customize(voiceAlert.Samantha, strings.Join([]string{"complete", speed, "times"}, ""))
 }
 
 func SpeedUpAllAudios(root, pattern string, speed string) {
