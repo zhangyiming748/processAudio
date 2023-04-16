@@ -3,8 +3,8 @@ package processAudio
 import "testing"
 
 func TestProcessAudio(t *testing.T) {
-	dir := "/Users/zen/Music/Music/Media.localized/Music/小野猫/Unknown Album"
-	pattern := "mp3"
+	dir := "/Users/zen/Downloads/Telegram"
+	pattern := "mp3;aac"
 	ProcessAudios(dir, pattern)
 }
 func TestProcessAllAudio(t *testing.T) {
@@ -13,7 +13,7 @@ func TestProcessAllAudio(t *testing.T) {
 	ProcessAllAudios(dir, pattern)
 }
 func TestSpeedUpAudio(t *testing.T) {
-	dir := "/Users/zen/Downloads/整理/YvDSJYMGBmjdKkPG"
+	dir := "/Users/zen/Downloads/Telegram"
 	pattern := "mp3;m4a;flac;MP3;wma;wav;aac"
 	SpeedUpAudios(dir, pattern, AudioBook)
 }

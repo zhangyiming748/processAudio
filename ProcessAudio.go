@@ -20,11 +20,9 @@ var (
 	mylog *slog.Logger
 )
 
-func init() {
-	logLevel := os.Getenv("LEVEL")
-	//var level slog.Level
+func setLog(level string) {
 	var opt slog.HandlerOptions
-	switch logLevel {
+	switch level {
 	case "Debug":
 		opt = slog.HandlerOptions{ // 自定义option
 			AddSource: true,
@@ -60,6 +58,10 @@ func init() {
 		panic(err)
 	}
 	mylog = slog.New(opt.NewJSONHandler(io.MultiWriter(logf, os.Stdout)))
+}
+func init() {
+	level := os.Getenv("LEVEL")
+	setLog(level)
 }
 func processAudio(in GetFileInfo.Info) {
 	out := strings.Join([]string{strings.Trim(in.FullPath, in.ExtName), "aac"}, "")
@@ -111,7 +113,7 @@ func ProcessAudios(dir, pattern string) {
 }
 func ProcessAllAudios(root, pattern string) {
 	ProcessAudios(root, pattern)
-	folders := GetAllFolder.ListFolders(root)
+	folders := GetAllFolder.List(root)
 	for _, folder := range folders {
 		ProcessAudios(folder, pattern)
 	}
@@ -132,7 +134,7 @@ func SpeedUpAudios(dir, pattern string, speed string) {
 
 func SpeedUpAllAudios(root, pattern string, speed string) {
 	SpeedUpAudios(root, pattern, speed)
-	folders := GetAllFolder.ListFolders(root)
+	folders := GetAllFolder.List(root)
 	for _, folder := range folders {
 		SpeedUpAudios(folder, pattern, speed)
 	}
