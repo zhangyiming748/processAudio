@@ -14,7 +14,7 @@ func SpeedupAudio(in GetFileInfo.Info, speed string) {
 	dst := strings.Join([]string{src, "speed"}, "") //目标文件目录
 	os.Mkdir(dst, 0777)
 	target := strings.Join([]string{dst, in.FullName}, string(os.PathSeparator))
-	mylog.Info("io", slog.Any("输入文件", in.FullPath), slog.Any("输出文件", target))
+	mylog.Info("io", slog.String("输入文件", in.FullPath), slog.String("输出文件", target))
 	sppedUp(in.FullPath, target, speed)
 }
 
@@ -34,14 +34,14 @@ func sppedUp(in, out string, speed string) {
 	}
 	for {
 		tmp := make([]byte, 1024)
-		_, err := stdout.Read(tmp)
+		_, err = stdout.Read(tmp)
 		t := string(tmp)
 		fmt.Println(t)
 		if err != nil {
 			break
 		}
 	}
-	if err := cmd.Wait(); err != nil {
+	if err = cmd.Wait(); err != nil {
 		mylog.Warn("命令执行中", slog.Any("错误", err))
 		return
 	}
