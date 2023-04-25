@@ -17,3 +17,9 @@ func TestSpeedUpAudio(t *testing.T) {
 	pattern := "mp3;m4a;flac;MP3;wma;wav;aac"
 	SpeedUpAudios(dir, pattern, AudioBook)
 }
+func TestSpeedAndConv(t *testing.T) {
+	setLog("Debug")
+	dir := "/Users/zen/github/processAudio/storage"
+	pattern := "mp3;m4a;flac;MP3;wma;wav;aac"
+	SpeedUpAudios(dir, pattern, AudioBook)
+}
