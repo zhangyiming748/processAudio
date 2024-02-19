@@ -1,7 +1,13 @@
 github.com/zhangyiming748/GetAllFolder v0.0.15 h1:7ygbz2A3TXV924xS+D5JK4OEUGg5zx3xPEtQ0bsD23E=
 github.com/zhangyiming748/GetAllFolder v0.0.15/go.mod h1:KGbwfCyI+hUrTqwlBFOTGaTJHLsdKQAT2hfLId5bEpM=
+github.com/zhangyiming748/GetAllFolder v0.0.20 h1:1HR+wKCP6lYIUXXpxcmp4ba1U8n6uz5QSTgvVVqZkEE=
+github.com/zhangyiming748/GetAllFolder v0.0.20/go.mod h1:uhdqD8XPoOOVj9ywdbAh0CkGaM7kJpfQEiwPjk9NSD4=
 github.com/zhangyiming748/GetFileInfo v0.0.35 h1:JZlBQXKL9vkIW7ft46eUZ+wV+czZDXKwfF834qWLJ/M=
 github.com/zhangyiming748/GetFileInfo v0.0.35/go.mod h1:2/iOmJVnoB0p68lEhjc5WyFrKye6rjxIYDrsMEorLdI=
+github.com/zhangyiming748/GetFileInfo v0.0.40 h1:1uDayfWABDINIvUDWyi6TdMjOdOYnPTqrIKQ/MF+DnQ=
+github.com/zhangyiming748/GetFileInfo v0.0.40/go.mod h1:D76EP151kuBY59SWz0nU3XdyDEPPUyFZxHq0cJCgvj8=
+github.com/zhangyiming748/filetype v0.0.1 h1:C7a49LHKzqiYAiw/u2lTmPU6gP6Nwb6/sSDBmBMoJ/k=
+github.com/zhangyiming748/filetype v0.0.1/go.mod h1:DFFw06VgsQVSriUKe95IC+HKaY4u6hCCbXJE1L1HNUk=
 github.com/zhangyiming748/voiceAlert v0.0.18 h1:WFxY7V+mdngaKaVliJsmxA+I0tfP8uia+Sy/XgwHJoI=
 github.com/zhangyiming748/voiceAlert v0.0.18/go.mod h1:6l1HiM/P+7/LsE1HRtr2Q+nhtYITMWHWgk6QNjRYb5U=
 golang.org/x/exp v0.0.0-20230519143937-03e91628a987 h1:3xJIFvzUFbu4ls0BTBYcgbCGhA63eAOEMxIHugyXJqA=
